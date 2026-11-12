@@ -3,29 +3,17 @@
 #include <algorithm>
 
 void Inventory::add(const std::string& item, int quantity) {
-    for (auto& entry : items_) {
-        if (entry.first == item) {
-            entry.second += quantity;
-            return;
-        }
-    }
-    items_.emplace_back(item, quantity);
+    items_[item] += quantity;
 }
 
 void Inventory::remove(const std::string& item, int quantity) {
-    for (auto& entry : items_) {
-        if (entry.first == item) {
-            entry.second = std::max(0, entry.second - quantity);
-            return;
-        }
+    auto it = items_.find(item);
+    if (it != items_.end()) {
+        it->second = std::max(0, it->second - quantity);
     }
 }
 
 int Inventory::count(const std::string& item) const {
-    for (const auto& entry : items_) {
-        if (entry.first == item) {
-            return entry.second;
-        }
-    }
-    return 0;
+    auto it = items_.find(item);
+    return it != items_.end() ? it->second : 0;
 }

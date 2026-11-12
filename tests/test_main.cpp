@@ -35,6 +35,23 @@ static void test_inventory_counts() {
     CHECK(inv.count("bow") == 0);
 }
 
+static void test_inventory_many_items() {
+    Inventory inv;
+    const int kItems = 20000;
+    for (int i = 0; i < kItems; ++i) {
+        inv.add("item" + std::to_string(i), i);
+    }
+    for (int i = 0; i < kItems; ++i) {
+        inv.add("item" + std::to_string(i), 1);
+    }
+    CHECK(inv.count("item0") == 1);
+    CHECK(inv.count("item19999") == 20000);
+    inv.remove("item500", 100);
+    CHECK(inv.count("item500") == 401);
+    inv.remove("missing", 1);
+    CHECK(inv.count("missing") == 0);
+}
+
 static void test_stats() {
     CHECK(average({2, 4}) == 3.0);
     CHECK(clamp_percent(150) == 100);
@@ -44,6 +61,7 @@ static void test_stats() {
 int main() {
     test_ring_buffer_keeps_order();
     test_inventory_counts();
+    test_inventory_many_items();
     test_stats();
     if (failures == 0) {
         std::printf("all tests passed\n");

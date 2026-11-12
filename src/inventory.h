@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-#include <utility>
-#include <vector>
+#include <unordered_map>
 
 // Inventory counts items by name.
 class Inventory {
@@ -13,5 +12,6 @@ public:
     int count(const std::string& item) const;
 
 private:
-    std::vector<std::pair<std::string, int>> items_;
+    // Hash map keyed by item name so lookups stay O(1) with many distinct items.
+    std::unordered_map<std::string, int> items_;
 };
