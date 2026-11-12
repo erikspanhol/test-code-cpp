@@ -30,9 +30,19 @@ static void test_inventory_counts() {
     inv.add("arrow", 10);
     inv.add("arrow", 5);
     CHECK(inv.count("arrow") == 15);
-    inv.remove("arrow", 20);
-    CHECK(inv.count("arrow") == 0);
+    CHECK(inv.remove("arrow", 5));
+    CHECK(inv.count("arrow") == 10);
     CHECK(inv.count("bow") == 0);
+}
+
+static void test_inventory_remove_reports_shortage() {
+    Inventory inv;
+    inv.add("arrow", 10);
+    CHECK(!inv.remove("arrow", 20));
+    CHECK(inv.count("arrow") == 10);
+    CHECK(inv.remove("arrow", 10));
+    CHECK(inv.count("arrow") == 0);
+    CHECK(!inv.remove("bow", 1));
 }
 
 static void test_stats() {
@@ -44,6 +54,7 @@ static void test_stats() {
 int main() {
     test_ring_buffer_keeps_order();
     test_inventory_counts();
+    test_inventory_remove_reports_shortage();
     test_stats();
     if (failures == 0) {
         std::printf("all tests passed\n");
