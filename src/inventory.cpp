@@ -12,13 +12,17 @@ void Inventory::add(const std::string& item, int quantity) {
     items_.emplace_back(item, quantity);
 }
 
-void Inventory::remove(const std::string& item, int quantity) {
+bool Inventory::remove(const std::string& item, int quantity) {
     for (auto& entry : items_) {
         if (entry.first == item) {
-            entry.second = std::max(0, entry.second - quantity);
-            return;
+            if (entry.second < quantity) {
+                return false;
+            }
+            entry.second -= quantity;
+            return true;
         }
     }
+    return false;
 }
 
 int Inventory::count(const std::string& item) const {
