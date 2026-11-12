@@ -7,7 +7,9 @@ function loot.roll_loot(table, roll)
   if #table == 0 then
     return nil
   end
-  return table[roll % #table]
+  -- Lua arrays are 1-based; map rolls onto 1..#table. Lua's % always
+  -- returns a non-negative result here, so roll 0 maps to the last entry.
+  return table[(roll - 1) % #table + 1]
 end
 
 return loot
