@@ -37,6 +37,9 @@ static void test_inventory_counts() {
 
 static void test_stats() {
     CHECK(average({2, 4}) == 3.0);
+    CHECK(average({1, 2}) == 1.5);
+    CHECK(average({-1, -2}) == -1.5);
+    CHECK(average({}) == 0.0);
     CHECK(clamp_percent(150) == 100);
     CHECK(clamp_percent(-5) == 0);
 }
