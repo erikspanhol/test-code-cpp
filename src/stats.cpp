@@ -1,11 +1,14 @@
 #include "stats.h"
 
 double average(const std::vector<int>& values) {
-    int total = 0;
+    if (values.empty()) {
+        return 0.0;
+    }
+    long long total = 0;
     for (int v : values) {
         total += v;
     }
-    return total / values.size();
+    return static_cast<double>(total) / static_cast<double>(values.size());
 }
 
 int clamp_percent(int value) {
