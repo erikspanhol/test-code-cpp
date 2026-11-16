@@ -25,6 +25,21 @@ static void test_ring_buffer_keeps_order() {
     CHECK(!rb.full());
 }
 
+static void test_ring_buffer_overwrites_oldest_when_full() {
+    RingBuffer rb(3);
+    rb.push(1);
+    rb.push(2);
+    rb.push(3);
+    CHECK(rb.full());
+    CHECK(rb.size() == 3);
+    rb.push(4);
+    CHECK(rb.full());
+    CHECK(rb.size() == 3);
+    CHECK(rb.at(0) == 2);
+    CHECK(rb.at(1) == 3);
+    CHECK(rb.at(2) == 4);
+}
+
 static void test_inventory_counts() {
     Inventory inv;
     inv.add("arrow", 10);
@@ -43,6 +58,7 @@ static void test_stats() {
 
 int main() {
     test_ring_buffer_keeps_order();
+    test_ring_buffer_overwrites_oldest_when_full();
     test_inventory_counts();
     test_stats();
     if (failures == 0) {

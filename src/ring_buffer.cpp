@@ -17,7 +17,7 @@ void RingBuffer::push(int value) {
 }
 
 bool RingBuffer::full() const {
-    return count_ > data_.size();
+    return count_ >= data_.size();
 }
 
 std::size_t RingBuffer::size() const {
