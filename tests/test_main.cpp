@@ -29,10 +29,10 @@ static void test_inventory_counts() {
     Inventory inv;
     inv.add("arrow", 10);
     inv.add("arrow", 5);
-    CHECK(inv.count("arrow") == 15);
+    CHECK(inv.quantity("arrow") == 15);
     inv.remove("arrow", 20);
-    CHECK(inv.count("arrow") == 0);
-    CHECK(inv.count("bow") == 0);
+    CHECK(inv.quantity("arrow") == 0);
+    CHECK(inv.quantity("bow") == 0);
 }
 
 static void test_stats() {
