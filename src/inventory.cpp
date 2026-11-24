@@ -21,7 +21,7 @@ void Inventory::remove(const std::string& item, int quantity) {
     }
 }
 
-int Inventory::count(const std::string& item) const {
+int Inventory::quantity(const std::string& item) const {
     for (const auto& entry : items_) {
         if (entry.first == item) {
             return entry.second;
